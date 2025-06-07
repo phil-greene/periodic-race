@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 11% 98%; /* #F5F7FA */
+  --foreground: 220 13% 13%; /* #1F2937 */
+  --muted: 210 11% 96%; /* #F1F5F9 */
+  --muted-foreground: 215 16% 47%; /* #64748B */
+  --popover: 0 0% 100%; /* #FFFFFF */
+  --popover-foreground: 220 13% 13%; /* #1F2937 */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 220 13% 13%; /* #1F2937 */
+  --border: 220 13% 91%; /* #E2E8F0 */
+  --input: 220 13% 91%; /* #E2E8F0 */
+  --primary: 221 83% 53%; /* #3B82F6 */
+  --primary-foreground: 210 40% 98%; /* #F8FAFC */
+  --secondary: 210 40% 96%; /* #F1F5F9 */
+  --secondary-foreground: 222 84% 5%; /* #0F172A */
+  --accent: 210 40% 96%; /* #F1F5F9 */
+  --accent-foreground: 222 84% 5%; /* #0F172A */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 210 40% 98%; /* #F8FAFC */
+  --ring: 221 83% 53%; /* #3B82F6 */
+  --radius: 0.5rem;
+  
+  /* Game-specific colors */
+  --game-blue: 221 83% 53%; /* #3B82F6 */
+  --game-emerald: 158 64% 52%; /* #10B981 */
+  --element-metal: 45 93% 47%; /* #EAB308 */
+  --element-nonmetal: 213 94% 68%; /* #60A5FA */
+  --element-metalloid: 142 71% 45%; /* #22C55E */
+  --element-noble: 330 81% 60%; /* #EC4899 */
+}
+
+.dark {
+  --background: 222 84% 5%; /* #0F172A */
+  --foreground: 210 40% 98%; /* #F8FAFC */
+  --muted: 217 32% 17%; /* #1E293B */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 */
+  --popover: 222 84% 5%; /* #0F172A */
+  --popover-foreground: 210 40% 98%; /* #F8FAFC */
+  --card: 222 84% 5%; /* #0F172A */
+  --card-foreground: 210 40% 98%; /* #F8FAFC */
+  --border: 217 32% 17%; /* #1E293B */
+  --input: 217 32% 17%; /* #1E293B */
+  --primary: 217 91% 60%; /* #3B82F6 */
+  --primary-foreground: 222 84% 5%; /* #0F172A */
+  --secondary: 217 32% 17%; /* #1E293B */
+  --secondary-foreground: 210 40% 98%; /* #F8FAFC */
+  --accent: 217 32% 17%; /* #1E293B */
+  --accent-foreground: 210 40% 98%; /* #F8FAFC */
+  --destructive: 0 63% 31%; /* #DC2626 */
+  --destructive-foreground: 210 40% 98%; /* #F8FAFC */
+  --ring: 217 91% 60%; /* #3B82F6 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .element-square {
+    @apply aspect-square min-h-[20px] sm:min-h-[22px] lg:min-h-[26px] flex flex-col items-center justify-center text-xs font-semibold border rounded transition-all duration-200 cursor-pointer relative;
+  }
+  
+  .element-square:hover {
+    @apply scale-105 shadow-lg;
+  }
+  
+  .element-square.empty {
+    @apply bg-gray-100 border-gray-300 border-dashed text-gray-400;
+  }
+  
+  .element-square.filled {
+    @apply shadow-lg transform scale-105;
+  }
+  
+  .element-square.target {
+    @apply bg-blue-100 border-blue-500 border-2 animate-pulse;
+  }
+  
+  .periodic-grid {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 1px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 768px) {
+    .periodic-grid {
+      gap: 1px;
+    }
+    
+    .element-square {
+      @apply text-[9px] min-h-[18px];
+    }
+  }
+  
+  .answer-button {
+    @apply min-h-[44px] transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-500/20;
+  }
+  
+  .answer-button:hover {
+    @apply shadow-lg;
+  }
+  
+  .answer-button.wiggle {
+    animation: wiggle 0.3s ease-in-out;
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+  }
+  
+  .modal-backdrop {
+    backdrop-filter: blur(4px);
+  }
+  
+  .game-timer {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .element-number {
+    @apply text-[8px] sm:text-[9px] text-gray-500 leading-none;
+  }
+  
+  .element-symbol {
+    @apply font-bold text-[10px] sm:text-xs lg:text-sm leading-none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  /* Element category colors */
+  .element-alkali-metal {
+    @apply bg-red-200 border-red-300 text-red-800;
+  }
+  
+  .element-alkaline-earth {
+    @apply bg-orange-200 border-orange-300 text-orange-800;
+  }
+  
+  .element-transition-metal {
+    @apply bg-yellow-200 border-yellow-300 text-yellow-800;
+  }
+  
+  .element-post-transition {
+    @apply bg-green-200 border-green-300 text-green-800;
+  }
+  
+  .element-metalloid {
+    @apply bg-teal-200 border-teal-300 text-teal-800;
+  }
+  
+  .element-nonmetal {
+    @apply bg-blue-200 border-blue-300 text-blue-800;
+  }
+  
+  .element-halogen {
+    @apply bg-purple-200 border-purple-300 text-purple-800;
+  }
+  
+  .element-noble-gas {
+    @apply bg-pink-200 border-pink-300 text-pink-800;
+  }
+  
+  .element-lanthanide {
+    @apply bg-indigo-200 border-indigo-300 text-indigo-800;
+  }
+  
+  .element-actinide {
+    @apply bg-cyan-200 border-cyan-300 text-cyan-800;
+  }
+}
+
+@layer utilities {
+  .animate-wiggle {
+    animation: wiggle 0.3s ease-in-out;
+  }
+  
+  .timer-urgent {
+    @apply text-red-500 animate-pulse;
+  }
+  
+  .progress-bar {
+    transition: width 0.5s ease-out;
+  }
+}
